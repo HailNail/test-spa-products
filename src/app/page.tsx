@@ -1,18 +1,30 @@
+"use client";
+import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import ProductCarousel from "./products/ProductCarousel";
+import ProductsCards from "./products/ProductCards";
 
 export default function Home() {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/products");
+  };
   return (
-    <main className="container flex flex-col items-center justify-center gap-6 py-20">
-      <h1 className="text-4xl font-bold tracking-tight">Product SPA</h1>
-      <p className="text-center max-w-md">
-        {" "}
-        A Single Page Application built with <strong>Next.js</strong>,{" "}
-        <strong>TypeScript</strong>, and <strong>Redux</strong>.
-        <br /> UI powered by <strong>shadcn/ui</strong>.
-      </p>
-      <Button size="lg" className="mt-4">
-        View Products
-      </Button>
-    </main>
+    <>
+      <Header />
+      <main className="flex flex-col items-center justify-center gap-6 py-12">
+        <h1 className="text-3xl font-bold text-rose-500">
+          Welcome to the Store
+        </h1>
+        <div className="flex flex-col items-center gap-10 py-10">
+          <ProductCarousel />
+          <ProductsCards />
+        </div>
+        <Button className="w-[80%]" onClick={handleClick}>
+          View All Products
+        </Button>
+      </main>
+    </>
   );
 }

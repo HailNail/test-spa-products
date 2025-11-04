@@ -9,8 +9,8 @@ const initialState: ProductsState = {
 };
 
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {
-  const res = await axios.get("https:/fakestoreapi.com/products");
-  return res.data;
+  const res = await axios.get("https://dummyjson.com/products");
+  return res.data.products as Product[];
 });
 
 const productSlice = createSlice({
@@ -33,5 +33,12 @@ const productSlice = createSlice({
       });
   },
 });
+
+export const selectAllProducts = (state: { products: ProductsState }) =>
+  state.products.items;
+export const selectProductsLoading = (state: { products: ProductsState }) =>
+  state.products.loading;
+export const selectProductsError = (state: { products: ProductsState }) =>
+  state.products.error;
 
 export default productSlice.reducer;
