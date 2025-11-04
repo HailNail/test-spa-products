@@ -12,9 +12,8 @@ export default function Home() {
   };
   return (
     <>
-      <Header />
       <main className="flex flex-col items-center justify-center gap-6 py-12">
-        <h1 className="text-3xl font-bold text-rose-500">
+        <h1 className="text-3xl font-bold text-foreground">
           Welcome to the Store
         </h1>
         <div className="flex flex-col items-center gap-10 py-10">

@@ -44,7 +44,7 @@ const ProductCarousel = () => {
 
   return (
     <>
-      <h1 className="text-3xl text-center p-4 text-rose-500 font-bold">
+      <h1 className="text-3xl text-center p-4 text-foreground font-bold">
         Bestsellers
       </h1>
       <Carousel className="w-[80%]">
@@ -64,14 +64,14 @@ const ProductCarousel = () => {
                   <Card>
                     <CardHeader className="flex items-center justify-center">
                       <Image
-                        className="aspect-4/6 w-full object-cover rounded-2xl"
+                        className="aspect-4/5 w-full object-cover rounded-2xl bg-accent"
                         src={product.thumbnail}
                         alt={product.title}
                         width={300}
                         height={450}
                       />
                     </CardHeader>
-                    <CardDescription className="flex justify-between px-2 font-semibold text-rose-500">
+                    <CardDescription className="flex justify-between px-2 font-semibold text-foreground">
                       {product.title.slice(0, 20)}
                       <Badge variant="secondary">${product.price}</Badge>
                     </CardDescription>

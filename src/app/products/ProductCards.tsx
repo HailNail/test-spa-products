@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Category } from "@/types/product";
 import Link from "next/link";
+import RatingStars from "@/components/RatingStars";
 
 const ProductsCards = () => {
   const dispatch = useAppDispatch();
@@ -61,9 +62,9 @@ const ProductsCards = () => {
                     alt={product.title}
                     width={400}
                     height={225}
-                    className="w-full aspect-video object-cover rounded-xl"
+                    className="w-full object-cover rounded-xl bg-accent"
                   />
-                  <CardTitle className="mt-3 text-rose-500">
+                  <CardTitle className="mt-3 text-foreground">
                     {product.title.slice(0, 20)}
                   </CardTitle>
                   <CardDescription className="overflow-hidden text-ellipsis h-10">
@@ -72,7 +73,13 @@ const ProductsCards = () => {
                 </CardHeader>
                 <CardContent className="space-y-1">
                   <p>Price: ${product.price}</p>
-                  <p>Rating: {product.rating}</p>
+                  <p className="flex justify-between py-1">
+                    <RatingStars rating={product.rating} />
+                    {Math.floor(
+                      (product.reviews.length + 1) * Math.random() * 10
+                    )}{" "}
+                    Reviews
+                  </p>
                   {product.tags.slice(0, 3).map((tag) => (
                     <Badge key={tag} variant="secondary" className="mr-2">
                       {tag}
@@ -90,7 +97,7 @@ const ProductsCards = () => {
     <div className="space-y-10 w-full">
       {categories.map((category) => (
         <div key={category} className="mb-10 w-full">
-          <h2 className="text-2xl text-center font-semibold text-rose-500 mb-4 capitalize">
+          <h2 className="text-2xl text-center font-semibold text-foreground mb-4 capitalize">
             {category}
           </h2>
           {renderProductsByCategory(category)}
