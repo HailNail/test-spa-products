@@ -9,12 +9,12 @@ const RatingStars = ({ rating }: RatingStarsProps) => {
   const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
 
   return (
-    <div className="flex gap-1 text-yellow-400">
+    <div className="flex gap-1 text-primary">
       {Array.from({ length: fullStars }).map((_, i) => (
         <Star
           key={`full-${i}`}
           fill="currentColor"
-          stroke="oklch(37.543% 0.09415 46.647)"
+          stroke="currentColor"
           strokeWidth={1.5}
         />
       ))}
@@ -22,7 +22,7 @@ const RatingStars = ({ rating }: RatingStarsProps) => {
         <StarHalf
           key="half"
           fill="currentColor"
-          stroke="oklch(37.543% 0.09415 46.647)"
+          stroke="currentColor"
           strokeWidth={1.5}
         />
       )}
@@ -30,7 +30,7 @@ const RatingStars = ({ rating }: RatingStarsProps) => {
         <Star
           key={`empty-${i}`}
           fill="none"
-          stroke="oklch(37.543% 0.09415 46.647)"
+          stroke="currentColor"
           strokeWidth={1.5}
         />
       ))}

@@ -73,13 +73,13 @@ const ProductsCards = () => {
                 </CardHeader>
                 <CardContent className="space-y-1">
                   <p>Price: ${product.price}</p>
-                  <p className="flex justify-between py-1">
+                  <div className="flex justify-between py-1">
                     <RatingStars rating={product.rating} />
                     {Math.floor(
                       (product.reviews.length + 1) * Math.random() * 10
                     )}{" "}
                     Reviews
-                  </p>
+                  </div>
                   {product.tags.slice(0, 3).map((tag) => (
                     <Badge key={tag} variant="secondary" className="mr-2">
                       {tag}

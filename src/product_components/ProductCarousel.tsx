@@ -71,9 +71,17 @@ const ProductCarousel = () => {
                         height={450}
                       />
                     </CardHeader>
-                    <CardDescription className="flex justify-between px-2 font-semibold text-foreground">
-                      {product.title.slice(0, 20)}
-                      <Badge variant="secondary">${product.price}</Badge>
+                    <CardDescription>
+                      <div className="flex justify-between px-6 font-semibold text-foreground">
+                        {product.title.slice(0, 20)}
+                        <Badge variant="secondary">${product.price}</Badge>
+                      </div>
+                      <p className="px-6 font-bold">
+                        Category:{" "}
+                        <Badge>
+                          {product.category ? product.category : "Unknown"}
+                        </Badge>
+                      </p>
                     </CardDescription>
                   </Card>
                 </motion.div>

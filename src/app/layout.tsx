@@ -1,7 +1,6 @@
-import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
-import { ReduxProvider } from "@/redux/Provider";
 import Header from "@/components/Header";
+import MainProvider from "@/providers/MainProvider";
 
 export const metadata = {
   title: "Product SPA",
@@ -16,17 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ReduxProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Header />
-            {children}
-          </ThemeProvider>
-        </ReduxProvider>
+        <MainProvider>
+          <Header />
+          {children}
+        </MainProvider>
       </body>
     </html>
   );

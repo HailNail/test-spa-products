@@ -8,7 +8,7 @@ export interface Product {
   rating: number;
   thumbnail: string;
   price: number;
-  image: string;
+  images?: string[];
   tags: string[];
   brand: string;
   isFavorite?: boolean;
@@ -16,7 +16,10 @@ export interface Product {
 }
 
 export interface ProductsState {
-  items: Product[];
+  localProducts: Product[];
+  apiProducts: Product[];
+  selectedProduct?: Product | null;
+  filterMode: "all" | "favorites";
   searchQuery: string;
   loading: boolean;
   error?: string | null;

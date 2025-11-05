@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import ProductsList from "./ProductList";
+import ProductsList from "../../product_components/ProductList";
 
 const ProductsPage = () => {
   return (

@@ -1,9 +1,33 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  PayloadAction,
+  createSelector,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import type { Product, ProductsState } from "../../types/product";
 
 const initialState: ProductsState = {
-  items: [],
+  localProducts: [
+    {
+      id: Date.now(),
+      title: "Demo Product",
+      category: "Electronics",
+      price: 99.99,
+      description:
+        "This is a demo product to show employers how the app works.",
+      stock: 10,
+      rating: 4,
+      reviews: [],
+      brand: "DemoBrand",
+      thumbnail: "/images/default.jpg", // local default image
+      tags: ["demo", "sample"],
+      isFavorite: false,
+    },
+  ],
+  apiProducts: [],
+  selectedProduct: null,
+  filterMode: "all",
   searchQuery: "",
   loading: false,
   error: null,
@@ -14,6 +38,18 @@ export const fetchProducts = createAsyncThunk("products/fetch", async () => {
   return res.data.products as Product[];
 });
 
+export const fetchProductById = createAsyncThunk(
+  "products/fetchById",
+  async (id: number) => {
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch product");
+    }
+    const data = await response.json();
+    return data as Product;
+  }
+);
+
 const productSlice = createSlice({
   name: "products",
   initialState,
@@ -22,23 +58,31 @@ const productSlice = createSlice({
       state.searchQuery = action.payload;
     },
     addProduct(state, action: PayloadAction<Omit<Product, "id">>) {
-      // assign sequential id for local products
-      const localProducts = state.items.filter((p) => p.isLocal);
-      const maxId = localProducts.length
-        ? Math.max(...localProducts.map((p) => p.id))
-        : 0;
-
       const newProduct: Product = {
-        id: maxId + 1,
+        id: Date.now(),
         ...action.payload,
-        isLocal: true,
         isFavorite: false,
       };
-      state.items.push(newProduct);
+      state.localProducts.unshift(newProduct);
+    },
+    deleteProduct(state, action: PayloadAction<number>) {
+      state.localProducts = state.localProducts.filter(
+        (product) => product.id !== action.payload
+      );
     },
     toggleFavorite(state, action: PayloadAction<number>) {
-      const product = state.items.find((p) => p.id === action.payload);
-      if (product) product.isFavorite = !product.isFavorite;
+      // Check both local and API products
+      const local = state.localProducts.find((p) => p.id === action.payload);
+      if (local) {
+        local.isFavorite = !local.isFavorite;
+        return;
+      }
+
+      const api = state.apiProducts.find((p) => p.id === action.payload);
+      if (api) api.isFavorite = !api.isFavorite;
+    },
+    setFilterMode(state, action: PayloadAction<"all" | "favorites">) {
+      state.filterMode = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -51,23 +95,89 @@ const productSlice = createSlice({
         fetchProducts.fulfilled,
         (state, action: PayloadAction<Product[]>) => {
           state.loading = false;
-          state.items = action.payload;
+          state.apiProducts = action.payload.map((newProduct) => {
+            const existing = state.apiProducts.find(
+              (p) => p.id === newProduct.id
+            );
+            return existing
+              ? { ...newProduct, isFavorite: existing.isFavorite }
+              : newProduct;
+          });
         }
       )
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Error fetching products";
+      })
+      .addCase(fetchProductById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(
-        fetchProducts.rejected,
-        (state, action: PayloadAction<string>) => {
+        fetchProductById.fulfilled,
+        (state, action: PayloadAction<Product>) => {
           state.loading = false;
-          state.error = action.payload || "Error fetching products";
+          state.selectedProduct = action.payload;
         }
-      );
+      )
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Error fetching product";
+      });
   },
 });
 
-export const { setSearchQuery, addProduct, toggleFavorite } =
-  productSlice.actions;
-export const selectAllProducts = (state: { products: ProductsState }) =>
-  state.products.items;
+const selectProductsState = (state: { products: ProductsState }) =>
+  state.products;
+
+export const {
+  setSearchQuery,
+  addProduct,
+  deleteProduct,
+  toggleFavorite,
+  setFilterMode,
+} = productSlice.actions;
+
+export const selectAllProducts = createSelector(
+  [selectProductsState],
+  (productsState) => [
+    ...productsState.localProducts,
+    ...productsState.apiProducts,
+  ]
+);
+
+export const selectLocalProducts = (state: { products: ProductsState }) =>
+  state.products.localProducts;
+
+export const selectFilteredProducts = createSelector(
+  [selectAllProducts, selectProductsState],
+  (allProducts, productsState) => {
+    const query = productsState.searchQuery.toLowerCase().trim();
+    const filterMode = productsState.filterMode;
+
+    let filtered = allProducts;
+    if (query) {
+      filtered = filtered.filter((product) =>
+        product.title.toLowerCase().includes(query)
+      );
+    }
+
+    if (filterMode === "favorites") {
+      filtered = filtered.filter((product) => product.isFavorite);
+    }
+
+    return filtered;
+  }
+);
+
+export const selectProductById = (
+  state: { products: ProductsState },
+  id: number
+) => {
+  const all = selectAllProducts(state);
+  return all.find((p) => p.id === id);
+};
+
 export const selectProductsLoading = (state: { products: ProductsState }) =>
   state.products.loading;
 export const selectProductsError = (state: { products: ProductsState }) =>
