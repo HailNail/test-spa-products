@@ -13,6 +13,7 @@ import {
   FieldLegend,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
+import { getBasePath } from "@/utils/getBasePath";
 export default function AddCardPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -29,9 +30,9 @@ export default function AddCardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const validateImage = (url: string) =>
     new Promise<string>((resolve) => {
+      const basePath = getBasePath();
       if (!url) return resolve(`${basePath}/images/default.jpg`);
 
       const img = new Image();

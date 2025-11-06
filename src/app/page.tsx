@@ -4,11 +4,11 @@ import ProductsCards from "../product_components/ProductCards";
 const Home = () => {
   return (
     <>
-      <main className="flex flex-col items-center justify-center gap-6 py-12">
+      <main className="flex flex-col w-full items-center justify-center gap-6 py-12">
         <h1 className="text-3xl font-bold text-foreground">
           Welcome to the Store
         </h1>
-        <div className="flex flex-col items-center gap-10 ">
+        <div>
           <ProductCarousel />
           <ProductsCards />
         </div>

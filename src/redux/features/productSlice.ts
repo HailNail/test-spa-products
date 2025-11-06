@@ -7,6 +7,12 @@ import {
 import axios from "axios";
 import type { Product, ProductsState } from "../../types/product";
 
+const demoThumbnail =
+  typeof window !== "undefined" &&
+  window.location.pathname.includes("/test-spa-products")
+    ? "/test-spa-products/images/default.jpg"
+    : "/images/default.jpg";
+
 const initialState: ProductsState = {
   localProducts: [
     {
@@ -20,7 +26,7 @@ const initialState: ProductsState = {
       rating: 4,
       reviews: [],
       brand: "DemoBrand",
-      thumbnail: "/images/default.jpg", // local default image
+      thumbnail: demoThumbnail, // local default image
       tags: ["demo", "sample"],
       isFavorite: false,
     },
