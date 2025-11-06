@@ -19,7 +19,7 @@ const initialState: ProductsState = {
       rating: 4,
       reviews: [],
       brand: "DemoBrand",
-      thumbnail: "/images/default.jpg",
+      thumbnail: "/static/default.jpg",
       tags: ["demo", "sample"],
       isFavorite: false,
     },
