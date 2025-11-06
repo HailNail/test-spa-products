@@ -14,8 +14,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  basePath: "/test-spa-products",
-  assetPrefix: "/test-spa-products",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH
+    ? `${process.env.NEXT_PUBLIC_BASE_PATH}/`
+    : "",
   reactCompiler: true,
 };
 

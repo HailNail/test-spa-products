@@ -22,6 +22,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import PathTest from "@/components/PathTest";
 
 const ProductCarousel = () => {
   const dispatch = useAppDispatch();
@@ -102,6 +103,7 @@ const ProductCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
+      <PathTest />
     </>
   );
 };
