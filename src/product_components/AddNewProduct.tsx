@@ -86,7 +86,10 @@ export default function AddCardPage() {
   };
 
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex flex-col justify-center mt-10">
+      <Button className="w-[20%] mt-4 border-2 mb-4" onClick={router.back}>
+        Back to Products
+      </Button>
       <Field className="w-[600px] bg-card/30 p-6 rounded-lg shadow-md">
         <FieldLegend>Add New Product</FieldLegend>
         <FieldContent>

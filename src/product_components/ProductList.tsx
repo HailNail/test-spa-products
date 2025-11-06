@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { PaginationComponent } from "@/components/PaginationComponent";
 import RatingStars from "@/components/RatingStars";
 import { Heart, Trash2 } from "lucide-react";
+import DialogComponent from "@/components/DialogComponent";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -35,6 +36,14 @@ const ProductsList = () => {
   const products = useAppSelector(selectFilteredProducts);
   const loading = useAppSelector(selectProductsLoading);
   const searchQuery = useAppSelector((state) => state.products.searchQuery);
+  const filterMode = useAppSelector((state) => state.products.filterMode);
+
+  const title =
+    searchQuery.trim() !== ""
+      ? searchQuery
+      : filterMode === "favorites"
+      ? "Favorites"
+      : "All products";
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -86,34 +95,22 @@ const ProductsList = () => {
               <Heart size={24} strokeWidth={2} stroke="oklch(71% 0.17 22)" />
             )}
           </motion.button>
-          {isLocal && (
-            <motion.button
-              className="absolute top-8 left-8"
-              onClick={() => dispatch(deleteProduct(product.id))}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <Trash2 strokeWidth={2} stroke="oklch(71% 0.17 22)" />
-            </motion.button>
-          )}
+          {isLocal && <DialogComponent productId={product.id} />}
           <Link href={`/products/${product.id}`}>
             <CardHeader>
               <Image
-                className="w-full object-cover rounded-xl p-2 bg-accent"
+                className="w-full object-cover rounded-xl bg-accent"
                 src={product.thumbnail}
                 alt={product.title}
                 width={400}
                 height={600}
               />
 
-              <CardTitle className="text-foreground font-bold mt-4">
+              <CardTitle className="text-foreground font-bold mt-4 line-clamp-1">
                 {product.title}
               </CardTitle>
               <CardDescription>
-                <p className="line-clamp-2 h-12">
-                  {product.description.substring(0, 80)}...
-                </p>
+                <p className="line-clamp-2 h-10">{product.description}</p>
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -151,7 +148,7 @@ const ProductsList = () => {
   return (
     <div className="py-8 px-4 w-[80%] mx-auto">
       <h1 className="text-3xl text-center font-bold my-8 text-foreground">
-        {searchQuery || "All products"}
+        {title}
       </h1>
       {loading ? (
         <div className="w-full flex justify-center p-4">

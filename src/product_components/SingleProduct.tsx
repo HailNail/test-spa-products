@@ -94,9 +94,11 @@ export default function SingleProduct({ productId }: ProductDetailProps) {
               <p className="text-muted-foreground">{product.description}</p>
 
               <div className="flex items-center space-x-2 mt-10">
-                <Badge variant="secondary" className="px-3 py-1">
-                  In Stock: {product.stock > 0 ? product.stock : "Out of Stock"}
+                <p>In Stock:</p>{" "}
+                <Badge className="px-3 py-1">
+                  {product.stock > 0 ? product.stock : "Out of Stock"}
                 </Badge>
+                <p>Category: </p>
                 <Badge className="capitalize">{product.category}</Badge>
               </div>
 
@@ -110,7 +112,7 @@ export default function SingleProduct({ productId }: ProductDetailProps) {
             </CardContent>
           </div>
         </div>
-        <CardFooter className="flex justify-between ">
+        <CardFooter className="flex justify-between mt-6">
           <Button className="w-[48%]" disabled={product.stock === 0}>
             {product.stock > 0 ? "Add to Cart" : "Notify Me When Available"}
           </Button>

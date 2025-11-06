@@ -20,6 +20,8 @@ import { Spinner } from "@/components/ui/spinner";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const ProductCarousel = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +36,11 @@ const ProductCarousel = () => {
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 10);
 
+  const router = useRouter();
+  const handleClick = () => {
+    router.push("/products");
+  };
+
   if (isLoading) {
     return (
       <div className="w-full flex justify-center p-4">
@@ -44,6 +51,9 @@ const ProductCarousel = () => {
 
   return (
     <>
+      <Button className="w-[80%]" onClick={handleClick}>
+        View All Products
+      </Button>
       <h1 className="text-3xl text-center p-4 text-foreground font-bold">
         Bestsellers
       </h1>
