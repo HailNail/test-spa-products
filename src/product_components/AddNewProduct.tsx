@@ -13,7 +13,7 @@ import {
   FieldLegend,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { getBasePath } from "@/utils/getBasePath";
+import { getPublicPath } from "@/utils/getPublicPath";
 export default function AddCardPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -32,15 +32,14 @@ export default function AddCardPage() {
 
   const validateImage = (url: string) =>
     new Promise<string>((resolve) => {
-      const basePath = getBasePath();
-      if (!url) return resolve(`${basePath}/images/default.jpg`);
+      const finalUrl = url ? url : getPublicPath("/images/default.jpg");
 
       const img = new Image();
-      img.onload = () => resolve(url);
+      img.onload = () => resolve(finalUrl);
       img.onerror = () => {
         alert("Thumbnail URL is invalid, try another URL or just leave empty.");
       };
-      img.src = url;
+      img.src = finalUrl;
     });
 
   const handleSubmit = async (e: React.FormEvent) => {

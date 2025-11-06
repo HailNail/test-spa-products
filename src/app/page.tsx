@@ -8,7 +8,7 @@ const Home = () => {
         <h1 className="text-3xl font-bold text-foreground">
           Welcome to the Store
         </h1>
-        <div>
+        <div className="flex flex-col items-center gap-10 w-full">
           <ProductCarousel />
           <ProductsCards />
         </div>
