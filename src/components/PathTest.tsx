@@ -12,8 +12,6 @@ export default function PathTest() {
 
   return (
     <div>
-      <h3>Path Test (NODE_ENV: {process.env.NODE_ENV})</h3>
-      <p>BASE_PATH: {process.env.NEXT_PUBLIC_BASE_PATH}</p>
       {testPaths.map((path) => (
         <div key={path}>
           <strong>Input:</strong> {path} →<strong>Output:</strong>

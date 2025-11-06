@@ -1,10 +1,13 @@
 export const getPublicPath = (path: string): string => {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const isGitHubPages =
+    typeof window !== "undefined"
+      ? window.location.hostname === "hailnail.github.io"
+      : false;
 
-  const cleanBase = basePath.replace(/^\/|\/$/g, "");
-  const cleanPath = path.replace(/^\//, "");
+  const basePath = isGitHubPages ? "/test-spa-products" : "";
 
-  if (!cleanBase) return `/${cleanPath}`;
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
 
-  return `/${cleanBase}/${cleanPath}`;
+  if (!basePath) return `/${cleanPath}`;
+  return `/${basePath}/${cleanPath}`;
 };
