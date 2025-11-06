@@ -22,7 +22,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
+import { getSafeThumbnail } from "@/utils/getSafeThumbnail";
 
 const ProductCarousel = () => {
   const dispatch = useAppDispatch();

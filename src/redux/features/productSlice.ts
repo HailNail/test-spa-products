@@ -6,6 +6,10 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { Product, ProductsState } from "../../types/product";
+import defaultImage from "@/assets/default.jpg";
+
+const getDefaultThumbnail = () => defaultImage.src;
+
 const initialState: ProductsState = {
   localProducts: [
     {
@@ -19,7 +23,7 @@ const initialState: ProductsState = {
       rating: 4,
       reviews: [],
       brand: "DemoBrand",
-      thumbnail: "/test-spa-products/default.jpg",
+      thumbnail: getDefaultThumbnail(),
       tags: ["demo", "sample"],
       isFavorite: false,
     },

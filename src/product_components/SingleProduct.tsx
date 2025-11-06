@@ -21,7 +21,7 @@ import RatingStars from "@/components/RatingStars";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Home, ShoppingCartIcon } from "lucide-react";
-import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
+import { getSafeThumbnail } from "@/utils/getSafeThumbnail";
 
 type ProductDetailProps = {
   productId: number;

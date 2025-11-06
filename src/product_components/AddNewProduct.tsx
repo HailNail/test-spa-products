@@ -13,7 +13,7 @@ import {
   FieldLegend,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { validatePexelsImage } from "@/components/utils/validateImage";
+import { validatePexelsImage } from "@/utils/validateImage";
 export default function AddCardPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");

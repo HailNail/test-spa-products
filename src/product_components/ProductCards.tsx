@@ -21,7 +21,7 @@ import Image from "next/image";
 import { Category } from "@/types/product";
 import Link from "next/link";
 import RatingStars from "@/components/RatingStars";
-import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
+import { getSafeThumbnail } from "@/utils/getSafeThumbnail";
 
 const ProductsCards = () => {
   const dispatch = useAppDispatch();

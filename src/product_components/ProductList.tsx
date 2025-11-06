@@ -28,7 +28,7 @@ import { PaginationComponent } from "@/components/PaginationComponent";
 import RatingStars from "@/components/RatingStars";
 import { Heart, Trash2 } from "lucide-react";
 import DialogComponent from "@/components/DialogComponent";
-import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
+import { getSafeThumbnail } from "@/utils/getSafeThumbnail";
 
 const ProductsList = () => {
   const router = useRouter();
