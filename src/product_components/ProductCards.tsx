@@ -53,7 +53,7 @@ const ProductsCards = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-[80%] mx-auto">
         {filteredProducts.map((product) => (
-          <Link href={`/products/${product.id}`} key={product.id}>
+          <Link href={`/product?id=${product.id}`} key={product.id}>
             <motion.div key={product.id} whileHover={{ scale: 0.97 }}>
               <Card>
                 <CardHeader>

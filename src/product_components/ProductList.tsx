@@ -96,7 +96,7 @@ const ProductsList = () => {
             )}
           </motion.button>
           {isLocal && <DialogComponent productId={product.id} />}
-          <Link href={`/products/${product.id}`}>
+          <Link href={`/product?id=${product.id}`}>
             <CardHeader>
               <Image
                 className="w-full object-cover rounded-xl bg-accent"

@@ -64,7 +64,7 @@ const ProductCarousel = () => {
               className="pl-1 md:basis-1/2 lg:basis-1/4"
               key={product.id}
             >
-              <Link href={`/products/${product.id}`}>
+              <Link href={`/product?id=${product.id}`}>
                 <motion.div
                   className="p-1"
                   whileTap={{ scale: 0.95 }}
