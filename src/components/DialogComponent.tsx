@@ -9,11 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  deleteProduct,
-  selectProductById,
-} from "@/redux/features/productSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { deleteProduct } from "@/redux/features/productSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 
