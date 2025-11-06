@@ -43,7 +43,7 @@ const ProductCarousel = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full flex justify-center p-4">
+      <div className="w-[80%] flex justify-center p-4">
         <Spinner className="size-6" />
       </div>
     );

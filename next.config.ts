@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     ],
   },
   basePath: "/test-spa-products",
-  assetPrefix: "/test-spa-products/",
+  assetPrefix: "/test-spa-products",
   reactCompiler: true,
 };
 

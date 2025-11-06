@@ -29,9 +29,10 @@ export default function AddCardPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
   const validateImage = (url: string) =>
     new Promise<string>((resolve) => {
-      if (!url) return resolve("/images/default.jpg"); // empty URL → default
+      if (!url) return resolve(`${basePath}/images/default.jpg`);
 
       const img = new Image();
       img.onload = () => resolve(url);
