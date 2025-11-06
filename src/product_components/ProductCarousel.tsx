@@ -22,7 +22,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import PathTest from "@/components/PathTest";
+import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
 
 const ProductCarousel = () => {
   const dispatch = useAppDispatch();
@@ -76,7 +76,7 @@ const ProductCarousel = () => {
                     <CardHeader className="flex items-center justify-center">
                       <Image
                         className="aspect-4/5 w-full object-cover rounded-2xl bg-accent"
-                        src={product.thumbnail}
+                        src={getSafeThumbnail(product.thumbnail)}
                         alt={product.title}
                         width={300}
                         height={450}
@@ -103,7 +103,6 @@ const ProductCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <PathTest />
     </>
   );
 };

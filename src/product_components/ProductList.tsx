@@ -28,6 +28,7 @@ import { PaginationComponent } from "@/components/PaginationComponent";
 import RatingStars from "@/components/RatingStars";
 import { Heart, Trash2 } from "lucide-react";
 import DialogComponent from "@/components/DialogComponent";
+import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -99,8 +100,8 @@ const ProductsList = () => {
           <Link href={`/product?id=${product.id}`}>
             <CardHeader>
               <Image
-                className="w-full object-cover rounded-xl bg-accent"
-                src={product.thumbnail}
+                className="w-full object-cover rounded-xl bg-accent aspect-square"
+                src={getSafeThumbnail(product.thumbnail)}
                 alt={product.title}
                 width={400}
                 height={600}

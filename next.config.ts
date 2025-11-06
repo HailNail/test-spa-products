@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**", // allow all paths from this domain
       },
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",

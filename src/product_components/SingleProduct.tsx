@@ -21,6 +21,7 @@ import RatingStars from "@/components/RatingStars";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { Home, ShoppingCartIcon } from "lucide-react";
+import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
 
 type ProductDetailProps = {
   productId: number;
@@ -63,9 +64,9 @@ export default function SingleProduct({ productId }: ProductDetailProps) {
         <div className="grid md:grid-cols-2 gap-8">
           <div className="flex justify-center items-start">
             <Image
-              src={product.thumbnail}
+              src={getSafeThumbnail(product.thumbnail)}
               alt={product.title}
-              className="rounded-lg object-cover w-full h-auto max-h-[400px] border bg-accent"
+              className="rounded-lg object-cover w-full h-auto max-h-[400px] border bg-accent aspect-square"
               width={400}
               height={400}
             />

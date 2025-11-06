@@ -13,34 +13,22 @@ import {
   FieldLegend,
 } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
-import { getPublicPath } from "@/utils/getPublicPath";
+import { validatePexelsImage } from "@/components/utils/validateImage";
 export default function AddCardPage() {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<number | null>(null);
   const [description, setDescription] = useState("");
-  const [stock, setStock] = useState(0);
-  const [rating, setRating] = useState(1);
+  const [stock, setStock] = useState<number | null>(null);
+  const [rating, setRating] = useState<number>(1);
   const [brand, setBrand] = useState("");
   const [thumbnail, setThumbnail] = useState("");
-  const [reviews, setReviews] = useState<{ rating: number; comment: string }[]>(
-    []
-  );
+  const [reviews, setReviews] = useState<
+    { rating: number; comment: string }[] | null
+  >(null);
   const [tags, setTags] = useState<string[]>([]);
   const router = useRouter();
   const dispatch = useAppDispatch();
-
-  const validateImage = (url: string) =>
-    new Promise<string>((resolve) => {
-      const finalUrl = url ? url : getPublicPath("/images/default.jpg");
-
-      const img = new Image();
-      img.onload = () => resolve(finalUrl);
-      img.onerror = () => {
-        alert("Thumbnail URL is invalid, try another URL or just leave empty.");
-      };
-      img.src = finalUrl;
-    });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,23 +38,24 @@ export default function AddCardPage() {
       return;
     }
     if (!category.trim()) return alert("Please enter a product category");
-    if (price < 0) return alert("Price must be 0 or higher");
-    if (stock < 0) return alert("Stock must be 0 or higher");
+    if (price === null || price < 0) return alert("Price must be 0 or higher");
+    if (stock === null || stock < 0) return alert("Stock must be 0 or higher");
     if (rating < 1 || rating > 5)
       return alert("Rating must be between 1 and 5");
-    const finalThumbnail = await validateImage(thumbnail.trim());
+    const finalThumbnail = await validatePexelsImage(thumbnail.trim());
     if (!finalThumbnail) return;
+    if (finalThumbnail === null) return;
     dispatch(
       addProduct({
         title: title.trim(),
         category: category.trim(),
-        price,
+        price: price || 0,
         description,
-        stock,
+        stock: stock || 0,
         rating,
         brand,
         thumbnail: finalThumbnail,
-        reviews,
+        reviews: reviews || [],
         tags,
       })
     );
@@ -87,11 +76,11 @@ export default function AddCardPage() {
   };
 
   return (
-    <div className="flex flex-col justify-center mt-10">
-      <Button className="w-[20%] mt-4 border-2 mb-4" onClick={router.back}>
+    <div className="flex flex-col w-[40%] justify-center mt-10">
+      <Button className="w-[40%] mt-4 border-2 mb-4" onClick={router.back}>
         Back to Products
       </Button>
-      <Field className="w-[600px] bg-card/30 p-6 rounded-lg shadow-md">
+      <Field className="w-full bg-card/30 p-6 rounded-lg shadow-md">
         <FieldLegend>Add New Product</FieldLegend>
         <FieldContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -113,7 +102,7 @@ export default function AddCardPage() {
             <Input
               type="number"
               placeholder="100..."
-              value={price}
+              value={price === null ? "" : price}
               onChange={(e) => setPrice(Number(e.target.value))}
               step={0.01}
               min={0.01}
@@ -130,7 +119,7 @@ export default function AddCardPage() {
             <Input
               type="number"
               placeholder="Stock"
-              value={stock}
+              value={stock === null ? "" : stock}
               onChange={(e) => setStock(Number(e.target.value))}
               step={1}
               min={0}
@@ -139,7 +128,6 @@ export default function AddCardPage() {
             <FieldLabel htmlFor="rating">Rating</FieldLabel>
             <Input
               type="number"
-              defaultValue={1}
               placeholder="4.5"
               value={rating}
               onChange={(e) => setRating(Number(e.target.value))}
@@ -154,16 +142,18 @@ export default function AddCardPage() {
               value={brand}
               onChange={(e) => setBrand(e.target.value)}
             />
-            <FieldLabel htmlFor="thumbnail">Thumbnail URL</FieldLabel>
+            <FieldLabel htmlFor="thumbnail">
+              Thumbnail URL (You can use any images.pexels)
+            </FieldLabel>
             <Input
-              placeholder="/images/example.jpg/png/webp from your public folder"
+              placeholder="https://images.pexels.com/photos/3907507/pexels-photo-3907507.jpeg or leave empty"
               value={thumbnail}
               onChange={(e) => setThumbnail(e.target.value)}
             />
             <FieldLabel htmlFor="reviews">Reviews</FieldLabel>
             <Input
               type="number"
-              value={reviews.length}
+              value={reviews?.length || ""}
               placeholder="60"
               onChange={(e) =>
                 setReviews(Array.from({ length: Number(e.target.value) }))

@@ -6,8 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { Product, ProductsState } from "../../types/product";
-import { getPublicPath } from "@/utils/getPublicPath";
-
 const initialState: ProductsState = {
   localProducts: [
     {
@@ -21,7 +19,7 @@ const initialState: ProductsState = {
       rating: 4,
       reviews: [],
       brand: "DemoBrand",
-      thumbnail: getPublicPath("/images/default.jpg"), // local default image
+      thumbnail: "/images/default.jpg",
       tags: ["demo", "sample"],
       isFavorite: false,
     },

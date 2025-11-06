@@ -6,7 +6,7 @@ export interface Product {
   stock: number;
   reviews: { rating: number; comment: string }[];
   rating: number;
-  thumbnail: string;
+  thumbnail: string | null;
   price: number;
   images?: string[];
   tags: string[];

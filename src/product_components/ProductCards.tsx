@@ -21,6 +21,7 @@ import Image from "next/image";
 import { Category } from "@/types/product";
 import Link from "next/link";
 import RatingStars from "@/components/RatingStars";
+import { getSafeThumbnail } from "@/components/utils/getSafeThumbnail";
 
 const ProductsCards = () => {
   const dispatch = useAppDispatch();
@@ -58,7 +59,7 @@ const ProductsCards = () => {
               <Card>
                 <CardHeader>
                   <Image
-                    src={product.thumbnail}
+                    src={getSafeThumbnail(product.thumbnail)}
                     alt={product.title}
                     width={400}
                     height={225}
