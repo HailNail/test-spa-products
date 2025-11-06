@@ -19,7 +19,7 @@ const initialState: ProductsState = {
       rating: 4,
       reviews: [],
       brand: "DemoBrand",
-      thumbnail: "/static/default.jpg",
+      thumbnail: "/test-spa-products/default.jpg",
       tags: ["demo", "sample"],
       isFavorite: false,
     },
