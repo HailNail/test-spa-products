@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "pre-deploy": "npm run build",
-    "deploy": "gh-pages -d out",
     "start": "npx serve@latest out",
     "lint": "eslint"
   },
