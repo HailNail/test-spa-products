@@ -1,27 +1,22 @@
-export const validatePexelsImage = (url?: string): Promise<string | null> =>
-  new Promise((resolve) => {
-    const loadDefault = () =>
-      import("./pexels").then(({ fetchPexelsImage }) =>
-        fetchPexelsImage().then(resolve)
-      );
+import defaultImage from "@/assets/default.jpg";
 
-    if (!url) {
-      // empty → default image
-      loadDefault();
-      return;
-    }
+export const validatePexelsImage = (url?: string): string | null => {
+  const getDefaultThumbnail = () => defaultImage.src;
 
-    if (!url.includes("pexels.com")) {
-      alert("Only Pexels images are allowed. Please enter a valid Pexels URL.");
-      resolve(null); // return null → stay on the page
-      return;
-    }
+  if (!url || url.trim() === "") {
+    return getDefaultThumbnail();
+  }
 
-    const img = new Image();
-    img.onload = () => resolve(url); // valid image → return URL
-    img.onerror = () => {
-      alert("Image URL is invalid. Please enter a valid Pexels URL.");
-      resolve(null); // broken image → stay on the page
-    };
-    img.src = url;
-  });
+  const trimmedUrl = url.trim();
+  const pexelsRegex =
+    /^https:\/\/images\.pexels\.com\/photos\/\d+\/[\w\-%]+\.((jpe?g)|(png)|(webp))(\?.*)?$/i;
+
+  if (!pexelsRegex.test(trimmedUrl)) {
+    alert(
+      "Please enter a valid Pexels image URL or leave it empty for the default image."
+    );
+    return null;
+  }
+
+  return trimmedUrl;
+};

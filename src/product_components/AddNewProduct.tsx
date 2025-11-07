@@ -42,9 +42,8 @@ export default function AddCardPage() {
     if (stock === null || stock < 0) return alert("Stock must be 0 or higher");
     if (rating < 1 || rating > 5)
       return alert("Rating must be between 1 and 5");
-    const finalThumbnail = await validatePexelsImage(thumbnail.trim());
+    const finalThumbnail = validatePexelsImage(thumbnail.trim());
     if (!finalThumbnail) return;
-    if (finalThumbnail === null) return;
     dispatch(
       addProduct({
         title: title.trim(),
