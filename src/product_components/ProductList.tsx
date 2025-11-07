@@ -1,7 +1,6 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import {
-  deleteProduct,
   fetchProducts,
   selectFilteredProducts,
   selectLocalProducts,
@@ -15,7 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { selectAllProducts } from "@/redux/features/productSlice";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +24,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PaginationComponent } from "@/components/PaginationComponent";
 import RatingStars from "@/components/RatingStars";
-import { Heart, Trash2 } from "lucide-react";
+import { Heart } from "lucide-react";
 import DialogComponent from "@/components/DialogComponent";
 import { getSafeThumbnail } from "@/utils/getSafeThumbnail";
 
